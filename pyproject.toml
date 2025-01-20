@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "django-docker"
+version = "0.1.0"
+description = ""
+authors = ["mateus-dev-me <mateusmartinsipu2@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+psycopg2-binary = "^2.9.10"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.10.0"
+isort = "^5.13.2"
+mypy = "^1.14.1"
+ipython = "^8.31.0"
+
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.3.4"
+pytest-cov = "^6.0.0"
+pytest-django = "^4.9.0"
+faker = "^33.3.1"
+factory-boy = "^3.3.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
