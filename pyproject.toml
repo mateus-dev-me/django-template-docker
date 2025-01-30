@@ -1,4 +1,5 @@
 [tool.poetry]
+package-mode = false
 name = "django-docker"
 version = "0.1.0"
 description = ""
