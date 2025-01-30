@@ -1,75 +1,106 @@
 # Django Template Project
+[![Python Version](https://img.shields.io/badge/Python-3.11%2B-blue)](https://www.python.org/downloads/release)
+[![Django Version](https://img.shields.io/badge/Django-4.2%2B-green)](https://docs.djangoproject.com/en/stable/releases/)
 
 Este é um template de projeto Django configurado para ser facilmente utilizado em novos projetos. Ele já vem com as configurações básicas para desenvolvimento e produção utilizando Docker e Docker Compose. O template inclui integração com um banco de dados Postgres e está pronto para ser extendido de acordo com as necessidades do seu projeto.
 
-## Estrutura do Projeto
+# Estrutura do Projeto
 
-A estrutura do template é a seguinte:
-
+Este projeto segue uma estrutura modular para organização do código, configuração e automação de tarefas. Abaixo está uma visão geral da estrutura de diretórios e arquivos do projeto.
 
 ```
 .
-├── Dockerfile                # Arquivo Docker para criar a imagem do container
-├── Makefile                  # Makefile para automação de tarefas
-├── README.md                 # Documentação principal do projeto
 ├── app
-│   ├── core
+│   ├── config
 │   │   ├── __init__.py
 │   │   ├── asgi.py
-│   │   ├── settings          # Configurações do Django divididas em base, dev e prod
+│   │   └── settings            # Configurações do Django divididas em base, dev e prod
+│   │       ├── __init__.py
+│   │       ├── base.py
+│   │       ├── dev.py
+│   │       └── prod.py
+│   ├── core
+│   │   ├── __init__.py
+│   │   ├── abstracts           # Módulo para abstrações e modelos base
 │   │   │   ├── __init__.py
-│   │   │   ├── base.py
-│   │   │   ├── dev.py
-│   │   │   └── prod.py
-│   │   ├── settings.py       # Arquivo principal de configurações
-│   │   ├── urls.py           # URL routing do Django
-│   │   └── wsgi.py           # Configurações para WSGI
-│   ├── db.sqlite3            # Banco de dados SQLite (desenvolvimento)
-│   ├── manage.py             # Script de gerenciamento do Django
-│   └── requirements.txt      # Dependências do projeto
-├── compose.yml               # Configuração do Docker Compose para containers
-├── poetry.lock               # Arquivo de bloqueio do Poetry
-├── pyproject.toml            # Arquivo de configuração do Poetry
-└── scripts
-    └── commands.sh           # Script de inicialização e setup
+│   │   │   └── models.py
+│   │   └── apps.py
+│   ├── db.sqlite3              # Banco de dados SQLite (apenas para desenvolvimento)
+│   └── manage.py               # Script principal para execução de comandos Django
+├── dotenv-files
+│    └── .env-example           # Exemplo de variáveis de ambiente para configuração
+├── scripts
+│    └── commands.sh            # Script de automação de comandos
+├── Dockerfile                  # Arquivo Docker para criar a imagem do container
+├── compose.yml                 # Configuração do Docker Compose para orquestração de containers
+├── pyproject.toml              # Arquivo de configuração do Poetry (dependências e metadados do projeto)
+├── Makefile                    # Makefile para automação de tarefas comuns
+└── README.md                   # Documentação do projeto
 ```
 
+## Descrição dos diretórios e arquivos principais
 
-## Descrição dos Arquivos
+### `app/`
+Este diretório contém o código principal da aplicação.
+- `config/`: Configurações do Django, incluindo diferentes ambientes (`base.py`, `dev.py`, `prod.py`).
+- `core/`: Módulo central do projeto, contendo abstrações e configurações iniciais.
+- `db.sqlite3`: Banco de dados utilizado apenas para ambiente de desenvolvimento.
+- `manage.py`: Utilizado para rodar comandos administrativos do Django.
 
-- **Dockerfile**: Contém as instruções para construir a imagem Docker do projeto. Instala as dependências e configura o ambiente virtual Python.
-  
-- **Docker Compose (`compose.yml`)**: Configuração do Docker Compose para rodar o contêiner web e o banco de dados Postgres. O contêiner web depende do banco de dados.
+### `dotenv-files/`
+Contém arquivos `.env` para configuração de variáveis de ambiente.
+- `.env-example`: Modelo de arquivo de configuração para ambiente local.
 
-- **Makefile**: Utilizado para automação de tarefas de desenvolvimento e produção.
+### `scripts/`
+Scripts auxiliares para facilitar automação de tarefas.
+- `commands.sh`: Contém comandos para inicialização e setup do projeto.
 
-- **README.md**: Este arquivo que contém informações gerais sobre o projeto.
+### `Dockerfile`
+Define a imagem Docker para o projeto, permitindo execução em ambiente conteinerizado.
 
-- **app/core/settings**: Diretório contendo os arquivos de configuração para diferentes ambientes:
-  - **base.py**: Configurações compartilhadas para todos os ambientes.
-  - **dev.py**: Configurações específicas para o ambiente de desenvolvimento.
-  - **prod.py**: Configurações específicas para o ambiente de produção.
-  
-- **app/requirements.txt**: Lista de pacotes Python necessários para o projeto.
+### `compose.yml`
+Arquivo de configuração do Docker Compose para gerenciamento de múltiplos containers.
 
-- **scripts/commands.sh**: Script responsável por iniciar a aplicação, fazer migrações, coletar arquivos estáticos e iniciar o servidor (com opção de desenvolvimento ou produção).
+### `pyproject.toml`
+Gerencia dependências e metadados do projeto utilizando o Poetry.
 
-## Configuração do Ambiente
+### `Makefile`
+Facilita a execução de tarefas comuns através de comandos simplificados.
 
-### Docker
+## Configuração e Uso
 
-O projeto utiliza Docker para facilitar o desenvolvimento e a implantação. O **Dockerfile** define o ambiente do container, enquanto o **docker-compose.yml** configura os serviços necessários, como o serviço de aplicação (web) e banco de dados (db).
+### 1. Clonar o repositório
+```sh
+git clone https://github.com/mateus-dev-me/django-template-docker.git
+cd django-template-docker
+```
 
-Para construir a imagem e rodar os containers:
+### 2. Criar e configurar o ambiente virtual
+```sh
+make install
+```
 
-1. **Construa a imagem Docker**:
-   ```bash
-   docker-compose build
-   ```
+### 3. Configurar variáveis de ambiente
+Copie o arquivo `.env-example` para `.env` e edite conforme necessário:
+```sh
+cp dotenv-files/.env-example .env
+```
 
-2. **Inicie os containers**:
-   ```bash
-   docker-compose up
-   ```
+### 4. Subir o ambiente com Docker
+```sh
+docker-compose up -d
+```
 
-Isso irá subir os contêineres `web` e `db`, e você poderá acessar a aplicação em `http://localhost:8000`
+### 5. Executar a aplicação
+```sh
+make run
+```
+
+Agora o servidor estará rodando e acessível via `http://localhost:8000/`.
+
+## Contribuições
+
+Contribuições são bem-vindas! Se você tiver sugestões ou melhorias para o projeto, sinta-se à vontade para abrir uma **issue** ou enviar um **pull request**.
+
+## Licença
+Este projeto está licenciado sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
