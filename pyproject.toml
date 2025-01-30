@@ -52,7 +52,7 @@ extend-exclude = [
   ".venv",
   "data",
   "migrations",
-  "core",
+  "config",
   "manage.py",
   ".ruff_cache",
   "tests",
@@ -62,7 +62,6 @@ indent-width = 4
 
 
 [tool.ruff.lint]
-ignore = ["E501", "PLR0913", "PLR6301", "PLR0917", "PLR2004"]
 preview = true
 select = ['I', 'F', 'E', 'W', 'PL', 'PT']
 
