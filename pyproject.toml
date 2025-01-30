@@ -12,6 +12,13 @@ python = "^3.13"
 psycopg2-binary = "^2.9.10"
 
 
+[tool.poetry.group.dev.dependencies]
+black = "^24.10.0"
+isort = "^5.13.2"
+mypy = "^1.14.1"
+ipython = "^8.31.0"
+
+
 [tool.poetry.group.test.dependencies]
 pytest = "^8.3.4"
 pytest-cov = "^6.0.0"
@@ -20,9 +27,50 @@ faker = "^33.3.1"
 factory-boy = "^3.3.1"
 
 
-[tool.poetry.group.dev.dependencies]
-django-extensions = "^3.2.3"
-ruff = "^0.9.3"
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings.dev"
+pythonpath = "."
+python_files = ["test_*.py", "*_test.py"]
+addopts = ["-p no:warning", "--cov=."]
+
+
+[tool.coverage.run]
+omit = [
+    "__init__.py",
+    "manage.py",
+    "urls.py",
+    "apps.py",
+    "**/config/*",
+    "**/migrations/*",
+    "conftest.py",
+    "**/tests/*",
+]
+
+
+[tool.ruff]
+extend-exclude = [
+  ".venv",
+  "data",
+  "migrations",
+  "core",
+  "manage.py",
+  ".ruff_cache",
+  "tests",
+]
+line-length = 79
+indent-width = 4
+
+
+[tool.ruff.lint]
+ignore = ["E501", "PLR0913", "PLR6301", "PLR0917", "PLR2004"]
+preview = true
+select = ['I', 'F', 'E', 'W', 'PL', 'PT']
+
+
+[tool.ruff.format]
+preview = true
+quote-style = 'single'
+
 
 [build-system]
 requires = ["poetry-core"]
