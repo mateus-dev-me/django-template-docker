@@ -6,6 +6,10 @@ ALLOWED_HOSTS = ["*"]
 
 THIRD_PARTY_APPS += []
 
+THIRD_PARTY_APPS += [
+    "django_extensions",
+]
+
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 DATABASES = {
