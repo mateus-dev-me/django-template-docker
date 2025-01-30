@@ -8,16 +8,16 @@ license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.13"
+python = "^3.11"
 psycopg2-binary = "^2.9.10"
+python-dotenv = "^1.0.1"
+django = "4.2"
 
 
 [tool.poetry.group.dev.dependencies]
-black = "^24.10.0"
-isort = "^5.13.2"
-mypy = "^1.14.1"
-ipython = "^8.31.0"
 pre-commit = "^4.1.0"
+ruff = "^0.9.4"
+django-extensions = "^3.2.3"
 
 
 [tool.poetry.group.test.dependencies]
