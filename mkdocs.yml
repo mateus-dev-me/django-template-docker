@@ -1,0 +1,32 @@
+site_name: Django Template Docker 
+repo_url: https://github.com/dunossauro/django-template-docker
+repo_name: mateus-dev-me/django-template-docker
+
+theme:
+  name: material
+  language: pt
+  palette:
+    - scheme: slate
+      primary: green
+      toggle:
+        icon: material/weather-sunny
+        name: Modo claro
+    - scheme: default
+      primary: green
+      toggle:
+        icon: material/weather-night
+        name: Modo noturno
+nav:
+  - Home: index.md
+  - "API Reference":
+      - "Django Config": app/django_config.md
+      - "Local App Core": app/app_core.md
+  - "Scripts": scripts.md
+  - "Docker": docker.md
+  - Tests: tests.md
+
+markdown_extensions:
+  - toc:
+      permalink: true
+  - codehilite:
+      guess_lang: false
