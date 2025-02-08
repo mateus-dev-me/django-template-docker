@@ -69,6 +69,11 @@ test: lint        ## Run tests and generate coverage report.
 	$(ENV_PREFIX)coverage html
 
 
+.PHONY: docs
+docs:
+	$(ENV_PREFIX)mkdocs serve
+
+
 .PHONY: clean
 clean:            ## Clean unused files.
 	@find . -name '*.pyc' -exec rm -rf {} \;
