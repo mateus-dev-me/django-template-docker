@@ -1,31 +1,35 @@
-[tool.poetry]
-package-mode = false
+[project]
 name = "django-docker"
 version = "0.1.0"
 description = ""
-authors = ["mateus-dev-me <mateusmartinsipu2@gmail.com>"]
-license = "MIT"
+authors = [
+    {name = "mateus-dev-me",email = "mateusmartinsipu2@gmail.com"}
+]
+license = {text = "MIT"}
 readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "django (==4.2)",
+    "django-filter (>=24.3,<25.0)",
+    "python-dotenv (>=1.0.1,<2.0.0)",
+    "psycopg2-binary (>=2.9.10,<3.0.0)",
+]
 
-[tool.poetry.dependencies]
-python = "^3.11"
-psycopg2-binary = "^2.9.10"
-python-dotenv = "^1.0.1"
-django = "4.2"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.poetry]
+package-mode = false
 
 
 [tool.poetry.group.dev.dependencies]
-pre-commit = "^4.1.0"
-ruff = "^0.9.4"
 django-extensions = "^3.2.3"
-
-
-[tool.poetry.group.test.dependencies]
-pytest = "^8.3.4"
-pytest-cov = "^6.0.0"
-pytest-django = "^4.9.0"
-faker = "^33.3.1"
-factory-boy = "^3.3.1"
+ruff = "^0.9.4"
+ipdb = "^0.13.13"
+pre-commit = "^4.1.0"
 
 
 [tool.pytest.ini_options]
@@ -63,6 +67,7 @@ indent-width = 4
 
 
 [tool.ruff.lint]
+ignore = ["E501", "PLR0913", "PLR6301", "PLR0917", "PLR2004"]
 preview = true
 select = ['I', 'F', 'E', 'W', 'PL', 'PT']
 
@@ -72,6 +77,9 @@ preview = true
 quote-style = 'single'
 
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[tool.poetry.group.test.dependencies]
+pytest = "^8.3.4"
+pytest-cov = "^6.0.0"
+pytest-django = "^4.9.0"
+faker = "^35.2.0"
+factory-boy = "^3.3.1"
