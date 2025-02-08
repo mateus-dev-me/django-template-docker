@@ -15,7 +15,6 @@ dependencies = [
     "psycopg2-binary (>=2.9.10,<3.0.0)",
 ]
 
-
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
@@ -31,13 +30,22 @@ ruff = "^0.9.4"
 ipdb = "^0.13.13"
 pre-commit = "^4.1.0"
 
+[tool.poetry.group.docs.dependencies]
+mkdocs = "^1.6.1"
+mkdocs-material = "^9.6.3"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.3.4"
+pytest-cov = "^6.0.0"
+pytest-django = "^4.9.0"
+faker = "^35.2.0"
+factory-boy = "^3.3.1"
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "config.settings.dev"
 pythonpath = "."
 python_files = ["test_*.py", "*_test.py"]
 addopts = ["-p no:warning", "--cov=."]
-
 
 [tool.coverage.run]
 omit = [
@@ -50,7 +58,6 @@ omit = [
     "conftest.py",
     "**/tests/*",
 ]
-
 
 [tool.ruff]
 extend-exclude = [
@@ -65,21 +72,11 @@ extend-exclude = [
 line-length = 79
 indent-width = 4
 
-
 [tool.ruff.lint]
 ignore = ["E501", "PLR0913", "PLR6301", "PLR0917", "PLR2004"]
 preview = true
 select = ['I', 'F', 'E', 'W', 'PL', 'PT']
 
-
 [tool.ruff.format]
 preview = true
 quote-style = 'single'
-
-
-[tool.poetry.group.test.dependencies]
-pytest = "^8.3.4"
-pytest-cov = "^6.0.0"
-pytest-django = "^4.9.0"
-faker = "^35.2.0"
-factory-boy = "^3.3.1"
