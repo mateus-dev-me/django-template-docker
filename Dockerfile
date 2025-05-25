@@ -1,26 +1,43 @@
-FROM python:3.12-slim
-LABEL mantainer="mateus-dev-me.com.br"
+FROM python:3.12-slim as base
 
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-ENV POETRY_VIRTUALENVS_CREATE=false
+LABEL maintainer="mateus-dev@me.com.br"
+LABEL description="Backend application container"
 
-COPY ./app /app
-COPY ./pyproject.toml /app
-COPY ./scripts /scripts
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONHASHSEED=random \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
 
-WORKDIR /app
+RUN groupadd --gid 1000 appuser && \
+    useradd --uid 1000 --gid appuser --shell /bin/bash --create-home appuser
 
-EXPOSE 8000
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        build-essential \
+        curl && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /backend
+
+COPY --chown=appuser:appuser ./pyproject.toml ./
 
 RUN pip install --upgrade pip && \
-    pip install poetry && \
-    poetry install --no-root && \
-    mkdir -p /data/web/static && \
-    mkdir -p /data/web/media && \
-    mkdir -p /data/logs && \
-    chmod -R +x /scripts
+    pip install -e .
+
+COPY --chown=appuser:appuser ./backend ./
+COPY --chown=appuser:appuser ./scripts /scripts
+
+RUN mkdir -p /data/web/static /data/web/media /data/logs && \
+    chown -R appuser:appuser /data && \
+    chmod -R 755 /data && \
+    chmod +x /scripts/*.sh
 
 ENV PATH="/scripts:$PATH"
+
+USER appuser
+
+EXPOSE 8000
 
 CMD ["commands.sh"]
