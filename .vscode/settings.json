@@ -1,0 +1,29 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.pytest_cache": true,
+        "**/.ruff_cache": true,
+        "**/.venv": true,
+        "**/__pycache__": true,
+        "**.coverage": true,
+        "***.python-version": true,
+        "**/***.egg-info": true,
+    },
+    "editor.formatOnSave": true,
+    "ruff.lineLength": 79,
+    "ruff.lint.select": [
+        "I",
+        "F",
+        "E",
+        "W",
+        "PL",
+        "PT"
+    ],
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.ruff": "explicit",
+            "source.organizeImports.ruff": "explicit"
+        }
+    },
+}s
