@@ -56,60 +56,44 @@ TEMPLATES = [
     },
 ]
 
-LOG_LEVEL = os.getenv('DJANGO_LOG_LEVEL', 'INFO')
+
+LOG_LEVEL = os.get('DJANGO_LOG_LEVEL', 'INFO')
+LOG_DIR = BASE_DIR / 'logs'
+LOG_DIR.mkdir(exist_ok=True)
 
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': False,  # mantém logs de outras libs
+    'disable_existing_loggers': False,
     'formatters': {
-        'color': {
-            '()': 'colorlog.ColoredFormatter',
-            'format': '{log_color}[{asctime}] [{levelname}] [{name}] {message}',
-            'style': '{',
-            'log_colors': {
-                'DEBUG': 'cyan',
-                'INFO': 'green',
-                'WARNING': 'yellow',
-                'ERROR': 'red',
-                'CRITICAL': 'bold_red',
-            },
-        },
         'verbose': {
             'format': '[{asctime}] [{levelname}] [{name}] {message}',
             'style': '{',
         },
     },
     'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'formatter': 'color',
-        },
         'file': {
             'class': 'logging.FileHandler',
-            'filename': BASE_DIR / 'logs' / 'django.log',
+            'filename': LOG_DIR / 'django.log',
             'formatter': 'verbose',
         },
     },
     'root': {
-        'handlers': ['console', 'file'],
+        'handlers': ['file'],
         'level': LOG_LEVEL,
     },
     'loggers': {
         'django': {
-            'handlers': ['console', 'file'],
+            'handlers': ['file'],
             'level': LOG_LEVEL,
             'propagate': False,
         },
         'django.request': {
-            'handlers': ['console', 'file'],
+            'handlers': ['file'],
             'level': 'ERROR',
             'propagate': False,
         },
     },
 }
-
-LOG_DIR = BASE_DIR / 'logs'
-LOG_DIR.mkdir(exist_ok=True)
 
 
 WSGI_APPLICATION = 'core.wsgi.application'
@@ -136,9 +120,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-br'
 
-TIME_ZONE = 'America/Fortaleza'
+TIME_ZONE = 'America/Sao_Paulo'
 
 USE_I18N = True
 
